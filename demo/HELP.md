@@ -11,3 +11,5 @@ For further reference, please consider the following sections:
 my rebasing conflicts test --- branch main
 
 checkout and coding something
+
+main conflict test - 01
