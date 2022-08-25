@@ -9,7 +9,7 @@ For further reference, please consider the following sections:
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.3/maven-plugin/reference/html/#build-image)
 
 my rebasing conflicts test -- develop 01
-branch 02 conflict
+develop 03
 
 
 checkout and coding something
