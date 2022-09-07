@@ -1,0 +1,48 @@
+spring:
+  profiles:
+    active: @spring.profile.activated@
+  cloud:
+    stream:
+      function:
+        definition: sink;transfer;gather
+      bindings:
+        output:
+          destination: test1
+        transfer-in-0:
+          destination: test1
+          group: transfer
+        transfer-out-0:
+          destination: test2
+        sink-in-0:
+          destination: test2
+          group: sink
+        gather1:
+          destination: input1
+        gather2:
+          destination: input2
+        gather-in-0:
+          destination: input1
+          group: gather1
+        gather-in-1:
+          destination: input2
+          group: gather2
+        gather-out-0:
+          destination: test2
+#          consumeOther-in-0:
+#            destination: test2
+#            group: sink
+#      output-bindings: mytopic
+#      input-bindings: mytopic
+#      bindings:
+#        output:
+#          producer:
+#            partition-selector-expression: myPartitionKeySelector
+#            partition-key-extractor-name: myPartitionKeyExtractor
+#            partition-count: 2
+#          destination: mytopic  # Kafka 主题或绑定到raw-sensor-dataRabbitMQ 交换的队列中读取
+#        raw-sensor-data:
+#          group: group-master  #消费者绑定都可以使用该spring.cloud.stream.bindings.<bindingName>.group属性来指定组名
+#        consumePerson-in-0:
+#          destination: mytopic
+#        consumeOther-in-1:
+#          destination: mytopic

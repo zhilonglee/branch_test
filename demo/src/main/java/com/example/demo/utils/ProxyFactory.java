@@ -20,10 +20,4 @@ public class ProxyFactory {
         return (T) o;
     }
 
-    public static void main(String[] args) {
-        LocalRegister.register(HelloService.class.getName(), HelloServiceImpl.class);
-        HelloService helloService = ProxyFactory.getProxy(HelloService.class);
-        String caichao = helloService.sayHello("caichao");
-        System.out.println(caichao);
-    }
 }
