@@ -6,14 +6,11 @@ import com.example.demo.service.HelloService;
 import com.example.demo.service.impl.HelloServiceImpl;
 import com.example.demo.utils.LocalRegister;
 import com.example.demo.utils.ProxyFactory;
-import com.fasterxml.jackson.core.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 
