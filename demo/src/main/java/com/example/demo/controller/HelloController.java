@@ -7,6 +7,8 @@ import com.example.demo.service.impl.HelloServiceImpl;
 import com.example.demo.utils.LocalRegister;
 import com.example.demo.utils.ProxyFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -30,6 +33,9 @@ public class HelloController {
 
     @Autowired
     private AtomicInteger autoIndex;
+
+    @Autowired
+    private RedissonClient redissonClient;
 
 
     @RequestMapping("/logback/test")
@@ -75,5 +81,14 @@ public class HelloController {
         MessageBuilder<Person> messageBuilder2 = MessageBuilder.withPayload(person).setHeader(MyPartitionKeyExtractor.PARTITION_PROP, autoIndex.getAndIncrement());
 
         streamBridge.send("gather2",  messageBuilder2.build());
+    }
+
+    @RequestMapping("/redisson")
+    public ResponseEntity redissonTest() {
+        RBucket<Object> bucket = redissonClient.getBucket("666");
+        bucket.set("caichao",3, TimeUnit.MINUTES);
+        Object o = bucket.get();
+        log.info(o.toString());
+        return ResponseEntity.ok("666");
     }
 }

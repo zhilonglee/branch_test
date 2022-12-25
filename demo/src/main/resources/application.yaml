@@ -2,7 +2,7 @@ spring:
   profiles:
     active: @spring.profile.activated@
   datasource:
-    url: jdbc:mysql://localhost:3306/sakila?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.101.200:3306/sakila?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -35,21 +35,17 @@ spring:
           group: gather2
         gather-out-0:
           destination: test2
-#          consumeOther-in-0:
-#            destination: test2
-#            group: sink
-#      output-bindings: mytopic
-#      input-bindings: mytopic
-#      bindings:
-#        output:
-#          producer:
-#            partition-selector-expression: myPartitionKeySelector
-#            partition-key-extractor-name: myPartitionKeyExtractor
-#            partition-count: 2
-#          destination: mytopic  # Kafka 主题或绑定到raw-sensor-dataRabbitMQ 交换的队列中读取
-#        raw-sensor-data:
-#          group: group-master  #消费者绑定都可以使用该spring.cloud.stream.bindings.<bindingName>.group属性来指定组名
-#        consumePerson-in-0:
-#          destination: mytopic
-#        consumeOther-in-1:
-#          destination: mytopic
+      kafka:
+        binder:
+          brokers: 192.168.101.200:9092
+  redis:
+    redisson:
+      file: classpath:redisson.yaml
+redis:
+  host: 192.168.101.200
+  port: 6379
+  database: 0
+  timeout: 3000
+  connection:
+    poolSize: 32
+    minimumIdle-size: 10
