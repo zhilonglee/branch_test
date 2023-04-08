@@ -6,19 +6,20 @@ import com.example.demo.service.HelloService;
 import com.example.demo.service.impl.HelloServiceImpl;
 import com.example.demo.utils.LocalRegister;
 import com.example.demo.utils.ProxyFactory;
+import com.example.demo.utils.RedissonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -36,6 +37,9 @@ public class HelloController {
 
     @Autowired
     private RedissonClient redissonClient;
+
+    @Value("${big.decimal:200.00}")
+    private BigDecimal bigDecimal;
 
 
     @RequestMapping("/logback/test")
@@ -85,10 +89,15 @@ public class HelloController {
 
     @RequestMapping("/redisson")
     public ResponseEntity redissonTest() {
-        RBucket<Object> bucket = redissonClient.getBucket("666");
-        bucket.set("caichao",3, TimeUnit.MINUTES);
-        Object o = bucket.get();
-        log.info(o.toString());
+        RedissonUtils.testAtomicLong();
+        RedissonUtils.testKeys();
+        RedissonUtils.publish("caochao", "真他妈的傻逼玩意！");
+        return ResponseEntity.ok(bigDecimal.toString());
+    }
+
+    @RequestMapping("/redisson/subscribe")
+    public ResponseEntity subscribe() {
+        RedissonUtils.subscribe("caochao");
         return ResponseEntity.ok("666");
     }
 }
