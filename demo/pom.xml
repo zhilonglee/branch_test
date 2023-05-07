@@ -30,6 +30,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>7.8.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -122,6 +127,12 @@
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-slf4j</artifactId>
             <version>11.8</version>
+        </dependency>
+        <!-- elasticsearch 的客户端 -->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.8.0</version>
         </dependency>
     </dependencies>
 
